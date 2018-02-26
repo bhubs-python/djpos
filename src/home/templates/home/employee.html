@@ -4,6 +4,109 @@
 
 
 {% block body %}
+    <div class="col s12 m12 l12" style="margin-top: 30px; margin-bottom: 30px;">
+
+        <!-- Add Employee -->
+        <a class="waves-effect waves-light btn modal-trigger" href="#add_employee">Add Employee</a>
+
+        <!-- Modal Structure -->
+        <div id="add_employee" class="modal">
+            <div class="modal-content">
+                <h4>Add Employee</h4>
+
+                <div class="row">
+                    <div class="col s12 m10 offset-m1 l10 offset-l1">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">account_circle</i>
+                                {{ employee_form.first_name }}
+                                <label for="icon_prefix white-text">*First Name</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">account_circle</i>
+                                {{ employee_form.last_name }}
+                                <label for="icon_prefix white-text">*Last Name</label>
+                            </div>
+
+                            <div class="col s12 m10 offset-m1 l10 offset-l1">
+                                Select Gender
+                                {{ employee_form.gender }}
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">email</i>
+                                {{ employee_form.email }}
+                                <label for="icon_prefix white-text">*Email</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">call</i>
+                                {{ employee_form.phone_number }}
+                                <label for="icon_prefix white-text">Phone</label>
+                            </div>
+
+                            <div style="" class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">location_on</i>
+                                {{ employee_form.address }}
+                                <label for="icon_prefix white-text">Address</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">email</i>
+                                {{ employee_form.city }}
+                                <label for="icon_prefix white-text">City</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">email</i>
+                                {{ employee_form.state }}
+                                <label for="icon_prefix white-text">State</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 l6">
+                                <i class="material-icons prefix">email</i>
+                                {{ employee_form.post_code }}
+                                <label for="icon_prefix white-text">Post Code</label>
+                            </div>
+
+                            <div style="" class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">create</i>
+                                {{ employee_form.comment }}
+                                <label for="icon_prefix white-text">Comment</label>
+                            </div>
+
+                            {% if employee_form.non_field_errors %}
+                                {% for error in employee_form.non_field_errors %}
+                                    <div class="col s12 m12 l12 center-align">
+                                        <h4 style="color: red;">Sorry ! Some Issue Found ,</h4>
+                                        <p style="color: red; font-size: 20px;">
+                                            {{ error }}
+                                        </p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="col s12 m12 l12 center-align" style="margin-bottom: 20px;">
+                    <button class="btn waves-effect waves-light" type="submit" style="">Add
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+
+            </form>
+        </div>
+        <!--end Add Employee-->
+
+
+    </div>
+
     <table style="margin-top: 100px;">
         <thead>
             <tr>
@@ -28,5 +131,17 @@
             {% endfor %}
         </tbody>
     </table>
+
+{% endblock %}
+
+
+{% block js %}
+
+<script>
+    $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
 
 {% endblock %}
