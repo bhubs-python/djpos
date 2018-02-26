@@ -8,6 +8,7 @@
 
         <!-- Add Employee -->
         <a class="waves-effect waves-light btn modal-trigger" href="#add_employee">Add Employee</a>
+        <a class="waves-effect waves-light btn del">Delete</a>
 
         <!-- Modal Structure -->
         <div id="add_employee" class="modal">
@@ -119,19 +120,24 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="c_b">
             {% for employee in employees %}
-                <tr>
-                    <td>{{ employee.id }}</td>
-                    <td>{{ employee.last_name }}</td>
-                    <td>{{ employee.first_name }}</td>
-                    <td>{{ employee.email }}</td>
-                    <td>{{ employee.phone_number }}</td>
-                </tr>
+                <form method="post">
+                    <tr class="emp">
+                        <td>
+                            <input class="emp_check" type="checkbox" value="{{ employee.id }}" id="{{ employee.id }}" />
+                            <label class="black-text" for="{{ employee.id }}">{{ employee.id }}</label>
+                        </td>
+
+                        <td>{{ employee.last_name }}</td>
+                        <td>{{ employee.first_name }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.phone_number }}</td>
+                    </tr>
+                </form>
             {% endfor %}
         </tbody>
     </table>
-
 {% endblock %}
 
 
@@ -142,6 +148,47 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
+
+
+
+  $(document).ready( function() {
+        var checked_list = [];
+
+        $(".emp_check").change( function() {
+
+            var employee_id = $(this).closest(".emp_check").val();
+
+            if ($(this).prop('checked')) {
+                checked_list.push(employee_id);
+            }else{
+                checked_list = jQuery.grep(checked_list, function(value) {
+                  return value != employee_id;
+                });
+            }
+            console.log(checked_list);
+        });
+
+
+        $(".del").click(function(){
+            $.ajax({
+                url: '/employee/api/',
+                data: {usr:checked_list.join(',')},
+                dataType: 'json',
+
+                success: function (data) {
+
+                    console.log(data);
+                    window.location.href="{% url 'home:employee' %}";
+
+                }
+            });
+        });
+    });
+
+
+
+
+
 </script>
 
 {% endblock %}

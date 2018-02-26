@@ -8,4 +8,9 @@ urlpatterns = [
 
     #url for employee
     url(r'^employee/$', views.Employee.as_view(), name='employee'),
+
+
+    #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    #:::::::::::::::::::::::api::::::::::::::::::::::::::::::::::::
+    url(r'^employee/api/$', views.EmployeeApi.as_view(), name='employee-api'),
 ]
