@@ -178,8 +178,11 @@
                 success: function (data) {
 
                     console.log(data);
-                    window.location.href="{% url 'home:employee' %}";
-
+                    if(data.message == 'failed'){
+                        
+                    }else{
+                        window.location.href="{% url 'home:employee' %}";
+                    }
                 }
             });
         });

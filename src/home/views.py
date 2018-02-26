@@ -59,18 +59,25 @@ class Employee(View):
 #employee api
 class EmployeeApi(APIView):
     def get(self, request):
-        usr = request.GET.get('usr')
+        if request.GET.get('usr'):
+            usr = request.GET.get('usr')
 
-        #make list from text
-        user_list = usr.split(',')
+            #make list from text
+            user_list = usr.split(',')
 
-        message = False
-        for u in user_list:
-            emp_obj = account_model.Employee.objects.get(id=u)
-            emp_obj.delete()
-            message = 'Delete'
+            message = 'failed'
+            for u in user_list:
+                emp_obj = account_model.Employee.objects.get(id=u)
+                emp_obj.delete()
+                message = 'Delete'
 
-        return Response({
-            'message': message,
+            return Response({
+                'message': message,
 
-        })
+            })
+        else:
+            message = 'failed'
+            return Response({
+                'message': message,
+
+            })
